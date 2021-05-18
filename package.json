@@ -1,6 +1,6 @@
 {
   "name": "npm-init-helper",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "helpers.js",
   "types": "helpers.ts",
   "scripts": {
