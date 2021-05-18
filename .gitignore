@@ -5,3 +5,4 @@ node_modules/
 tsconfig.tsbuildinfo
 .env
 helpers.js
+helpers.js.map

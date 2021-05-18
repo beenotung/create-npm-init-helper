@@ -1,7 +1,8 @@
 {
-  "name": "create-npm-helpers",
+  "name": "npm-init-helper",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "helpers.js",
+  "types": "helpers.ts",
   "scripts": {
     "test": "tsc --noEmit",
     "build": "tsc"
@@ -28,11 +29,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/beenotung/create-npm-init-helper.git"
+    "url": "git+https://github.com/beenotung/npm-init-helper.git"
   },
   "bugs": {
-    "url": "https://github.com/beenotung/create-npm-init-helper/issues"
+    "url": "https://github.com/beenotung/npm-init-helper/issues"
   },
-  "homepage": "https://github.com/beenotung/create-npm-init-helper#readme",
+  "homepage": "https://github.com/beenotung/npm-init-helper#readme",
   "description": ""
 }
