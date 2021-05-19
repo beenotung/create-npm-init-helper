@@ -1,6 +1,7 @@
 import degit from 'degit'
 import * as fs from 'fs'
 import { ReadStream, WriteStream } from 'fs'
+import * as fsExtra from 'fs-extra'
 import * as path from 'path'
 import * as readline from 'readline'
 
@@ -58,6 +59,7 @@ export async function cloneTemplate(options: {
   srcDir: string // e.g. template/demo-server
   showLog?: boolean
   showWarn?: boolean
+  updatePackageJson?: boolean
 }) {
   let dest = options.dest || (await getDest())
   let repoDir = fs.mkdtempSync(dest + '.tmp')
@@ -75,6 +77,25 @@ export async function cloneTemplate(options: {
     fs.renameSync(src, dest)
   } finally {
     fs.rmdirSync(repoDir, { recursive: true })
+  }
+  if (options.updatePackageJson) {
+    updatePackageJsonName(dest)
+  }
+}
+
+export async function copyTemplate(options: {
+  srcDir: string // e.g. __dirname/template/demo-server
+  dest?: string // can be obtained from `getDest()`
+  verbose?: boolean
+  updatePackageJson?: boolean
+}) {
+  let dest = options.dest || (await getDest())
+  if (options.verbose) {
+    console.log('Creating a new project in', dest, '...')
+  }
+  fsExtra.copySync(options.srcDir, dest)
+  if (options.updatePackageJson) {
+    updatePackageJsonName(dest)
   }
 }
 
@@ -97,4 +118,10 @@ export function updatePackageJson(file: string, updateFn: (json: any) => void) {
   updateFn(pkg.json)
   pkg.save()
   return pkg
+}
+
+function updatePackageJsonName(dest: string) {
+  let file = path.join(dest, 'package.json')
+  let name = path.basename(dest)
+  updatePackageJson(file, pkg => (pkg.name = name))
 }
