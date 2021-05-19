@@ -77,3 +77,24 @@ export async function cloneTemplate(options: {
     fs.rmdirSync(repoDir, { recursive: true })
   }
 }
+
+export function readPackageJson(file: string) {
+  let text = fs.readFileSync(file).toString()
+  let json = JSON.parse(text)
+  let indent = text
+    .split('\n')
+    .find(line => line !== line.trimStart() && line.includes('"'))
+    ?.split('"')[0]
+  function save() {
+    let text = JSON.stringify(json, null, indent)
+    fs.writeFileSync(file, text)
+  }
+  return { json, indent, save }
+}
+
+export function updatePackageJson(file: string, updateFn: (json: any) => void) {
+  let pkg = readPackageJson(file)
+  updateFn(pkg.json)
+  pkg.save()
+  return pkg
+}
