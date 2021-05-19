@@ -7,7 +7,6 @@ import * as readline from 'readline'
 
 export async function cloneGitRepo(options: {
   src: string // e.g. https://github.com/beenotung/cs-gen#template-macro
-  degitOptions?: degit.Options
   showLog?: boolean
   showWarn?: boolean
   dest: string // path of output folder
@@ -15,7 +14,7 @@ export async function cloneGitRepo(options: {
   if (options.showLog) {
     console.log('Cloning from', options.src, '...')
   }
-  let git = degit(options.src, options.degitOptions)
+  let git = degit(options.src)
   if (options.showWarn) {
     git.on('warn', info => console.error(info.message))
   }
