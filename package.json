@@ -1,6 +1,7 @@
 {
   "name": "npm-init-helper",
   "version": "1.0.1",
+  "description": "helper functions for `create-*` packages (to be used with `npm init-*`)",
   "main": "helpers.js",
   "types": "helpers.ts",
   "scripts": {
@@ -34,6 +35,5 @@
   "bugs": {
     "url": "https://github.com/beenotung/npm-init-helper/issues"
   },
-  "homepage": "https://github.com/beenotung/npm-init-helper#readme",
-  "description": ""
+  "homepage": "https://github.com/beenotung/npm-init-helper#readme"
 }
