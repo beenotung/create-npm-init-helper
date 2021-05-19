@@ -2,8 +2,8 @@
   "name": "npm-init-helper",
   "version": "1.2.1",
   "description": "helper functions for `create-*` packages (to be used with `npm init-*`)",
-  "main": "helpers.js",
-  "types": "helpers.ts",
+  "main": "dist/helpers.js",
+  "types": "dist/helpers.d.ts",
   "scripts": {
     "test": "tsc --noEmit",
     "build": "tsc"

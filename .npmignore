@@ -1,0 +1,3 @@
+tsconfig.*
+*.tgz
+pnpm-lock.yaml
