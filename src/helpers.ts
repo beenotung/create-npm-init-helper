@@ -1,4 +1,4 @@
-import degit from 'degit'
+import * as degit from 'degit'
 import * as fs from 'fs'
 import { ReadStream, WriteStream } from 'fs'
 import * as fsExtra from 'fs-extra'

@@ -2,10 +2,10 @@
   "compilerOptions": {
     "declaration": true,
     "sourceMap": true,
-    "target": "es6",
+    "target": "es2018",
     "module": "commonjs",
     "strict": true,
-    "esModuleInterop": true,
+    "esModuleInterop": false,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "outDir": "dist",
