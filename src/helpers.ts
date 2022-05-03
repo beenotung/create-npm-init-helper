@@ -74,8 +74,9 @@ export async function cloneTemplate(options: {
     }
     let src = path.join(repoDir, options.srcDir)
     fs.renameSync(src, dest)
-  } finally {
+  } catch (error) {
     fs.rmdirSync(repoDir, { recursive: true })
+    throw error
   }
   if (options.updatePackageJson) {
     updatePackageJsonName(dest)
