@@ -59,6 +59,7 @@ export async function cloneTemplate(options: {
   showLog?: boolean
   showWarn?: boolean
   updatePackageJson?: boolean
+  skipRenameIgnoreFile?: boolean
 }) {
   let dest = options.dest || (await getDest())
   let repoDir = fs.mkdtempSync(dest + '.tmp')
@@ -79,6 +80,9 @@ export async function cloneTemplate(options: {
   }
   if (options.updatePackageJson) {
     updatePackageJsonName(dest)
+  }
+  if (!options.skipRenameIgnoreFile) {
+    fixIgnoreFilename(dest)
   }
 }
 
@@ -123,4 +127,12 @@ function updatePackageJsonName(dest: string) {
   let file = path.join(dest, 'package.json')
   let name = path.basename(dest)
   updatePackageJson(file, pkg => (pkg.name = name))
+}
+
+function fixIgnoreFilename(dest: string) {
+  let git = path.join(dest, '.gitignore')
+  let npm = path.join(dest, '.npmignore')
+  if (!fs.existsSync(git) && fs.existsSync(npm)) {
+    fs.renameSync(npm, git)
+  }
 }
