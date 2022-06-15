@@ -92,6 +92,7 @@ export async function copyTemplate(options: {
   dest?: string // can be obtained from `getDest()`
   verbose?: boolean
   updatePackageJson?: boolean
+  skipRenameIgnoreFile?: boolean
 }) {
   let dest = options.dest || (await getDest())
   if (options.verbose) {
@@ -100,6 +101,9 @@ export async function copyTemplate(options: {
   fsExtra.copySync(options.srcDir, dest)
   if (options.updatePackageJson) {
     updatePackageJsonName(dest)
+  }
+  if (!options.skipRenameIgnoreFile) {
+    fixIgnoreFilename(dest)
   }
 }
 
