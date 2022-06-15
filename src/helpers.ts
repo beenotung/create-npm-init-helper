@@ -1,6 +1,6 @@
 import * as degit from 'degit'
 import * as fs from 'fs'
-import { ReadStream, WriteStream } from 'fs'
+import type { ReadStream, WriteStream } from 'fs'
 import * as fsExtra from 'fs-extra'
 import * as path from 'path'
 import * as readline from 'readline'
