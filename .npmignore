@@ -3,3 +3,5 @@ tsconfig.*
 pnpm-lock.yaml
 *.js.map
 src/
+test/
+.dccache
