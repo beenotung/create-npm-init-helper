@@ -4,6 +4,7 @@ import type { ReadStream, WriteStream } from 'fs'
 import * as fsExtra from 'fs-extra'
 import * as path from 'path'
 import * as readline from 'readline'
+import { execSync } from 'child_process'
 
 export async function cloneGitRepo(options: {
   src: string // e.g. https://github.com/beenotung/cs-gen#template-macro
@@ -139,5 +140,24 @@ function fixIgnoreFilename(dest: string) {
   let npm = path.join(dest, '.npmignore')
   if (!fs.existsSync(git) && fs.existsSync(npm)) {
     fs.renameSync(npm, git)
+  }
+}
+
+const hasExecCmd = process.platform == 'win32' ? 'where' : 'command -v'
+
+export function hasExec(name: string): boolean {
+  try {
+    execSync(hasExecCmd + ' ' + JSON.stringify(name))
+    return true
+  } catch (error) {
+    return false
+  }
+}
+
+export function findAnyExec(names: string[]): string | undefined {
+  for (let name of names) {
+    if (hasExec(name)) {
+      return name
+    }
   }
 }
