@@ -1,9 +1,9 @@
 import * as degit from 'degit'
 import * as fs from 'fs'
-import type { ReadStream, WriteStream } from 'fs'
 import * as fsExtra from 'fs-extra'
 import * as path from 'path'
 import * as readline from 'readline'
+import type { ReadLineOptions } from 'readline'
 import { execSync } from 'child_process'
 
 export async function cloneGitRepo(options: {
@@ -22,9 +22,25 @@ export async function cloneGitRepo(options: {
   await git.clone(options.dest)
 }
 
+export async function ask(options: {
+  question: string
+  input?: ReadLineOptions['input'] // default process.stdin
+  output?: ReadLineOptions['output'] // default process.stdout
+}) {
+  let io = readline.createInterface({
+    input: options.input || process.stdin,
+    output: options.output || process.stdout,
+  })
+  let answer = await new Promise<string>(resolve =>
+    io.question(options.question, resolve),
+  )
+  io.close()
+  return answer
+}
+
 export async function getDest(options?: {
-  input?: ReadStream // default process.stdin
-  output?: WriteStream // default process.stdout
+  input?: ReadLineOptions['input'] // default process.stdin
+  output?: ReadLineOptions['output'] // default process.stdout
   name?: string // default 'project directory'
 }) {
   options = options || {}
@@ -35,12 +51,7 @@ export async function getDest(options?: {
 
   let dest = process.argv[2]
   if (!dest) {
-    let io = readline.createInterface({
-      input,
-      output,
-    })
-    dest = await new Promise(resolve => io.question(question, resolve))
-    io.close()
+    dest = await ask({ question, input, output })
   }
   if (!dest) {
     console.error('Please specify the', name)
