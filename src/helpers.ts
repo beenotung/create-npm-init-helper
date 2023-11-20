@@ -22,11 +22,24 @@ export async function cloneGitRepo(options: {
   await git.clone(options.dest)
 }
 
+export async function ask(question: string): Promise<string>
 export async function ask(options: {
   question: string
   input?: ReadLineOptions['input'] // default process.stdin
   output?: ReadLineOptions['output'] // default process.stdout
-}) {
+}): Promise<string>
+export async function ask(
+  question_or_options:
+    | string
+    | {
+        question: string
+        input?: ReadLineOptions['input'] // default process.stdin
+        output?: ReadLineOptions['output'] // default process.stdout
+      },
+): Promise<string> {
+  if (typeof question_or_options === 'string')
+    return ask({ question: question_or_options })
+  let options = question_or_options
   let io = readline.createInterface({
     input: options.input || process.stdin,
     output: options.output || process.stdout,
