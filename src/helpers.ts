@@ -16,10 +16,14 @@ export async function cloneGitRepo(options: {
     console.log('Cloning from', options.src, '...')
   }
   let git = degit(options.src)
+  let log = (info: degit.Info) => console.error(info.message)
   if (options.showWarn) {
-    git.on('warn', info => console.error(info.message))
+    git.on('warn', log)
   }
   await git.clone(options.dest)
+  if (options.showWarn) {
+    git.off('warn', log)
+  }
 }
 
 export async function ask(question: string): Promise<string>
