@@ -1,4 +1,5 @@
-import * as degit from 'degit'
+// @ts-expect-error
+import * as degit from 'tiged'
 import * as fs from 'fs'
 import * as fsExtra from 'fs-extra'
 import * as path from 'path'
